@@ -1,0 +1,209 @@
+<html>
+
+
+    <head>
+
+        <meta charset="UTF-8">
+
+        <title>S&L</title>
+
+        <style>
+            body {
+                background-image: url(img/5509862\ 1.png);
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+                padding: 40px;
+            }
+
+            .main {
+                position: relative;
+                width: 1100px;
+                height: 650px;
+                margin: auto;
+            }
+
+
+            .table {
+                margin: 0;
+                position: absolute;
+                bottom: 60px;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border-spacing: 0px;
+            }
+
+
+            td {
+                color: aliceblue;
+                font-weight: 550;
+                font-size: 20px;
+                text-align: center;
+                padding-top: 10px;
+                padding-right: 12px;
+                padding-left: 70;
+                padding-bottom: 60;
+            }
+
+        
+            .table .odd {
+                background-color: rgba(184, 132, 255, 1);
+            }
+
+            .table .even {
+                background-color: rgba(104, 51, 179, 1)
+            }
+
+            .playerAvatar {
+                position: absolute;
+                right: 90px;
+                top: 120px;
+            }
+
+            .playerTurn {
+                position: absolute;
+                right: 90px;
+                top: 105px;
+                width: 600px;
+                height: 200px;
+            }
+            
+            .turnText {
+                color: aliceblue;
+                font-size: 27px;
+                text-align: center;
+                position: absolute;
+                right: 120px;
+            }
+
+            .dice {
+                width: 150px;
+                height: 72px;
+                text-align: center;
+                font-weight: 300;
+                font-size: large;
+                /* padding:  auto;
+                vertical-align: middle; */
+                /* padding: 7px 7px; */
+                position: absolute;
+                border-radius: 10px;
+                top: 130px;
+                left: 120px;
+                box-shadow: 0px 2px 2px rgba(104, 51, 179, 0.3);
+                cursor: pointer;
+                background-color: aliceblue;
+            }
+            .dice:active {
+                box-shadow: 0 1px 1px rgba(104, 51, 179, 0.3);
+                transform: translate(-2px, 2px);
+                
+            }
+        </style>
+
+        <script>
+            const plname = ["ممد ", "علی ", "رضا ", "حمید ", "زهرا "];
+            const imgsrc = ["img/5879221 12.png", "img/5879221 16.png", "img/5879221 19.png", "img/5879221 20.png","img/5879221 13.png"];
+            const numColums = 10 
+
+            let i = 0;
+            function onload() {
+                fplayer()
+                drawTable()
+            }
+
+            function drawTable() {
+                let r = document.getElementById("row");
+
+                for (let i = 1; i <= numColums ; i++) {
+                    if (i%2==0) {
+                        let c = document.createElement("td");
+                        r.appendChild(c);
+                        c.setAttribute("class", "even")
+                        let t =document.createTextNode(i)
+                        c.appendChild(t)
+                    }
+                    else {
+                        let c = document.createElement("td");
+                        r.appendChild(c);
+                        c.setAttribute("class", "odd")
+                        let t =document.createTextNode(i)
+                        c.appendChild(t)
+                    }
+                    
+                }
+
+            }
+
+            function fplayer() {
+                document.getElementById("avatar").src = imgsrc[0];
+                document.getElementById("plname").innerHTML = plname[0].bold();
+                document.getElementById("plnameturn").innerHTML = "نوبت " + plname[0] + " که تاس بندازه";
+
+            }
+
+            function dice() {
+                if (i==plname.length){
+                    i = 0;
+                }
+                if (document.getElementById("displayNum").innerHTML == "") {
+                    if (i==plname.length - 1) {
+                    document.getElementById("avatar").src = imgsrc[0];
+                    document.getElementById("plname").innerHTML = plname[0].bold();
+                    document.getElementById("plnameturn").innerHTML =  "نوبت " + plname[0] + " که تاس بندازه";
+                        
+                    }
+                    else{
+                        document.getElementById("avatar").src = imgsrc[i+1];
+                        document.getElementById("plname").innerHTML = plname[i+1].bold();
+                        document.getElementById("plnameturn").innerHTML =  "نوبت " + plname[i+1] + " که تاس بندازه";
+                    }
+
+                    let random = Math.floor(Math.random() * 6) + 1;
+                    const disappear = setTimeout(disa, 3000);
+                    function disa() {
+                        document.getElementById("displayNum").innerHTML = "";
+                    }
+                    document.getElementById("displayNum").innerHTML = "!" + plname[i] + random.toString() + " آورد";
+
+                    i++;
+                }
+           
+            }
+
+        </script>
+
+    </head>
+
+    <body onload="onload()">
+
+        <div class="main">
+            <div onclick="dice()" class="dice">
+                <p style="position: absolute;right: 70px; top: 8px;"><strong>تاس بنداز</strong></p>
+                <img src="img/image 1.png" id="dice" alt="dice" style="max-width: 60%; max-height: 60%; position: absolute; 
+                right: 13px; top: 14;"></div>
+            <p id="displayNum" style="position: absolute; font-size: 45px;
+                bottom: 200px;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: aliceblue;"></p>
+
+            <div class="playerTurn">
+                <p class="turnText" id="plname"></p><br><br><br>
+                <p class="turnText" style="font-size: 20px;" id="plnameturn"></p>
+            </div>
+            <div class="playerAvatar"><img id="avatar" alt="avatar" style="float:right;"></div>
+
+
+
+                <table class="table">
+                    <tr id="row">
+                    </tr>
+                </table>
+
+
+        </div>
+
+    </body>
+
+
+</html>
